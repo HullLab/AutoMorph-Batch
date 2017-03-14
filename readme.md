@@ -119,3 +119,33 @@ sbatch submit_segment.sh
 ```
 
 - See [dSQ Documentation](http://research.computing.yale.edu/support/hpc/user-guide/dead-simple-queue) for instructions on checking task status.
+
+## Focus
+
+Focus still requires the old SimpleQueue due to the restrictions on ZereneStacker.
+
+- Create taskfile for SimpleQueue.
+
+```bash
+build_sq.py focus
+```
+
+- Run sqCreateScript to create submission script. Set `num_workers` equal to a whole number that is about 10-25% of the number of tasks in your taskfile.
+
+```bash
+sqCreateScript -n <num_workers> taskfile_focus.txt > submit_focus.sh
+```
+
+- Edit `submit_focus.sh`. Add the additional directive to ensure one task per node. Put it with the similar looking lines, otherwise order doesn't matter.
+
+```bash
+#SBATCH --ntasks-per-node=1
+```
+
+
+- Submit the submission script to Slurm
+
+```
+sbatch submit_focus.sh
+```
+
