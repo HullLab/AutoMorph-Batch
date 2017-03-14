@@ -6,6 +6,9 @@ We run the AutoMorph batch workflow on Yale's grace-next cluster, using the Slur
 ssh -Y <netid>@grace-next.hpc.yale.edu
 ```
 
+- [Slurm Documentation](http://research.computing.yale.edu/support/hpc/user-guide/slurm)
+- [dSQ Documentation](http://research.computing.yale.edu/support/hpc/user-guide/dead-simple-queue) (including tips on how to monitor your tasks and identifying failed tasks)
+
 ## One Time Setup
 
 - Add the following to your `.bashrc` file on Grace
@@ -72,6 +75,8 @@ dSQ --taskfile taskfile_segment.txt > submit_segment.sh
 sbatch submit_segment.sh
 ```
 
+- See [dSQ Documentation](http://research.computing.yale.edu/support/hpc/user-guide/dead-simple-queue) for instructions on checking task status.
+
 ## Segment (final)
 
 - Edit `dirs_stacks.csv` to add final threshold values. For example:
@@ -109,3 +114,4 @@ dSQ --taskfile taskfile_segment.txt > submit_segment.sh
 sbatch submit_segment.sh
 ```
 
+- See [dSQ Documentation](http://research.computing.yale.edu/support/hpc/user-guide/dead-simple-queue) for instructions on checking task status.
