@@ -33,7 +33,11 @@ mkdir /gpfs/scratch60/geo/hull/data/<your_project>
 
 - Copy your stacks to your directory, either with Globus or rsync on Omega's data transfer node (email Kaylea if you have questions about this step).
 
-- Create directory in your project space (`$HOME/project`) for the segmented output files. This will be `output_root` below.
+- Create directory in your project space for the segmented output files. This will be `output_root` below.
+
+```bash
+mkdir $HOME/project/<your_project>
+```
 
 - Clone this repository into a new directory in your home directory on Grace.
 
