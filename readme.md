@@ -136,7 +136,7 @@ dSQ --taskfile taskfile_focus.txt > submit_focus.sh
 
 - Edit `submit_focus.sh`. Add the additional directive to ensure one task per node. Put it with the similar looking lines, otherwise order doesn't matter.
 
-```bash
+```
 #SBATCH --gres=nodelock:zerene:1
 ```
 
