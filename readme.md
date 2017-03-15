@@ -58,7 +58,7 @@ mkdir $HOME/project/<your_project>
 - Create taskfile for dSQ
 
 ```bash
-build_sq.py segment
+build_taskfile.py segment
 ```
 
 - Run dSQ to create submission script
@@ -97,7 +97,7 @@ sbatch submit_segment.sh
 - Create taskfile for dSQ
 
 ```bash
-build_sq.py segment
+build_taskfile.py segment
 ```
 
 - Run dSQ to create submission script
@@ -122,26 +122,23 @@ sbatch submit_segment.sh
 
 ## Focus
 
-Focus still requires the old SimpleQueue due to the restrictions on ZereneStacker.
-
 - Create taskfile for SimpleQueue.
 
 ```bash
-build_sq.py focus
+build_taskfile.py focus
 ```
 
-- Run sqCreateScript to create submission script. Set `num_workers` equal to a whole number that is about 10-25% of the number of tasks in your taskfile.
+- Run dSQ to create submission script
 
 ```bash
-sqCreateScript -n <num_workers> taskfile_focus.txt > submit_focus.sh
+dSQ --taskfile taskfile_focus.txt > submit_focus.sh
 ```
 
 - Edit `submit_focus.sh`. Add the additional directive to ensure one task per node. Put it with the similar looking lines, otherwise order doesn't matter.
 
 ```bash
-#SBATCH --ntasks-per-node=1
+#SBATCH --gres=nodelock:zerene:1
 ```
-
 
 - Submit the submission script to Slurm
 
