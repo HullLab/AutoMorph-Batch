@@ -7,7 +7,7 @@ output_directory += os.sep+twodmorph_run_name
 
 install_dir = '/home/geo/hull/ph269/software/AutoMorph'
 
-l = open('dirs_focused.txt','r')
+l = open('dirs_focused.txt', 'r')
 
 out_dir_list = []
 
@@ -28,8 +28,8 @@ for line in l:
                 os.makedirs(sample_out_directory)
 
         settings_text = []
-        settings_text.append("directory = "+directory)
-        settings_text.append ("output_dir = "+sample_out_directory)
+        settings_text.append("directory = " + directory)
+        settings_text.append("output_dir = " + sample_out_directory)
         settings_text.append("image_extension = .tif")
 
         settings_text.append("sampleID = "+sampleID)
@@ -49,16 +49,16 @@ for line in l:
         settings_text.append("downsample = []")
         settings_text.append("num_points = []")
         settings_text.append("draw_ar = []")
-        #print settings_text
+        # print settings_text
 
-       f = open(sample_out_directory+os.sep+'2dmorph_settings.txt', 'w')
+        f = open(sample_out_directory+os.sep+'2dmorph_settings.txt', 'w')
 
-       for setting in settings_text:
-           f.write(setting+'\n')
+        for setting in settings_text:
+            f.write(setting+'\n')
 
-       f.close()
+        f.close()
     else:
-       print "no focused_unlabeled directory: "+directory
+        print "no focused_unlabeled directory: "+directory
 
 # Write directory list
 f = open('dirs_'+twodmorph_run_name+'.txt', 'w')
