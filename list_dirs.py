@@ -1,14 +1,15 @@
 import os
+import sys
 import argparse
 import shutil
 
 # location of original stacks to be segmented
 raw_images_root = "/gpfs/scratch60/geo/hull/data/porosity"
 # location of output from segment
-output_root = "/home/fas/hull/jeb247/project/porosity_segmented"
+output_root = "/home/fas/hull/jeb247/project/porosity_segmented/round2/"
 
 
-def list_dirs_originals(raw_images_root, output_root):
+def list_dirs_originals(raw_images_root):
 
     f = open('dirs_stacks.txt', 'w')
     for root, dirs, files in os.walk(raw_images_root):
@@ -17,7 +18,7 @@ def list_dirs_originals(raw_images_root, output_root):
     f.close()
 
 
-def list_dirs_segmented(raw_images_root, output_root):
+def list_dirs_segmented(output_root):
 
     f = open('dirs_segmented.txt', 'w')
     for root, dirs, files in os.walk(output_root):
@@ -52,9 +53,11 @@ if __name__ == "__main__":
     if args.phase == 'presegment':
         list_dirs_originals(raw_images_root)
         list_dirs_segmented(output_root)
+
     elif args.phase == 'segmented':
         list_dirs_segment(output_root)
     elif args.phase == 'focused':
         list_dirs_focused(output_root)
     else:
         sys.exit('Unknown phase. Specify presegment, segmented or focused')
+

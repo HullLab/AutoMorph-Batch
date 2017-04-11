@@ -67,5 +67,3 @@ def segment_settings(settings):
         settings_text.append("catalog_prefix = "+settings['catalog_prefix'])
 
         write_settings_file(settings_text, 'segment')
-
-

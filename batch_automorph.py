@@ -64,6 +64,3 @@ if __name__ == "__main__":
         write_settings.threedmorph_settings(settings)
         build_taskfile.build_taskfile('3dmorph')
 
-
-
-
