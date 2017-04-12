@@ -188,9 +188,23 @@ python build_taskfile.py 2dmorph -d dirs_<twodmorph_run_name>.txt
 
 ### If Running with a CSV of Settings
 
-- Create `dirs_<twodmorph_run_name>.csv` listing the expected **output** directories and add fields for the settings you need to edit. Make sure to modify `write_2dmorph_settings.py` to read in these settings. (Sorry this is isn't automated yet).
+- Open `write_2dmorph_settings.py` and configure the  variable at the top named `twodmorph_run_name`.  You can change this variable for different 2dmorph settings so they output in unique locations. It will also create a directory list called `dirs_<twodmorph_run_name>.txt` and create output directories with that name in `output_root` as configured above. 
 
-- Open `write_2dmorph_settings.py` and configure the settings. There is also a variable at the top named `twodmorph_run_name`. You can change this variable for different 2dmorph settings. It will then create a directory list called `dirs_<twodmorph_run_name>.txt` but you can ignore this file. 
+- Run `write_2dmorph_settings.py`
+
+```
+python write_2dmorph_settings.py
+```
+
+- copy or move `dirs_<twodmorph_run_name>.txt` to `dirs_<twodmorph_run_name>.csv` and add fields for the settings you need to edit.
+
+- Open `write_2dmorph_settings.py` and configure the settings. Make sure to modify `write_2dmorph_settings.py` to read in these settings. It will create another directory list called `dirs_<twodmorph_run_name>.txt` but you can ignore this file.
+
+- Run `write_2dmorph_settings.py`
+
+```
+python write_2dmorph_settings.py
+```
 
 - Create a task list for 2dmorph 
 
