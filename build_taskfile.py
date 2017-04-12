@@ -30,13 +30,28 @@ def build_taskfile(function, directory_list=None):
         task.append('cd '+directory)
 
         if function == 'segment':
-            task.append('segment segment_settings.txt')
+            if os.path.exists(directory+'/segment_settings.txt'):
+                task.append('segment segment_settings.txt')
+            else:
+                print 'Settings file not found in %s. Double check your directory list: %s' % (directory, directory_list)
+                continue
         elif function == 'focus':
             task.append('focus final')
+
         elif function == '2dmorph':
-            task.append('run2dmorph 2dmorph_settings.txt')
+            if os.path.exists(directory+'/2dmorph_settings.txt'):
+                task.append('run2dmorph 2dmorph_settings.txt')
+            else:
+                print 'Settings file not found in %s. Double check your directory list: %s' % (directory, directory_list)
+                continue
+
         elif function == '3dmorph':
-            task.append('run3dmorph 3dmorph_settings.txt')
+            if os.path.exists(directory+'/3dmorph_settings.txt'):
+                task.append('run3dmorph 3dmorph_settings.txt')
+            else:
+                print 'Settings file not found in %s. Double check your directory list: %s' % (directory, directory_list)
+                continue
+
         else:
             sys.exit(1)
 
