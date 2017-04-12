@@ -44,8 +44,6 @@ mkdir $HOME/project/<your_project>
 - Edit and run `list_dirs.py`
     - specify `raw_images_root`
     - specify `output_root`
-    - run `list_dirs.py`
-
 
 ## Segment (sample)
 
@@ -55,10 +53,19 @@ mkdir $HOME/project/<your_project>
     - set `threshold_range` to the sample threshold range
     - run `write_segment_settings.py`
 
+- Run `list_dirs.py`. This will create three directories:
+    - `dirs_stacks.txt`: file listing all the input directories
+    - `dirs_stacks.csv`: same contents as `dirs_stacks.txt`, but fields should be added for when segment is run in `final` mode.
+    - `dirs_segmented.txt`: file listing the output directories that will contain the settings file and output images from segment.
+
+```
+python list_dirs.py presegment    
+```
+
 - Create taskfile for dSQ
 
 ```bash
-build_taskfile.py segment
+python build_taskfile.py segment
 ```
 
 - Run dSQ to create submission script
@@ -97,7 +104,7 @@ sbatch submit_segment.sh
 - Create taskfile for dSQ
 
 ```bash
-build_taskfile.py segment
+python build_taskfile.py segment
 ```
 
 - Run dSQ to create submission script
@@ -122,10 +129,17 @@ sbatch submit_segment.sh
 
 ## Focus
 
+- If this is your first step with the dataset. Run `list_dirs.py`. 
+    - `dirs_segmented.txt`: file listing the output directories that contain the output images from segment.
+
+```
+python list_dirs.py segmented    
+```
+
 - Create taskfile for SimpleQueue.
 
 ```bash
-build_taskfile.py focus
+python build_taskfile.py focus
 ```
 
 - Run dSQ to create submission script
@@ -137,12 +151,57 @@ dSQ --taskfile taskfile_focus.txt > submit_focus.sh
 - Edit `submit_focus.sh`. Add the additional directive to ensure one task per node. Put it with the similar looking lines, otherwise order doesn't matter.
 
 ```
-#SBATCH --gres=nodelock:zerene:1
+
 ```
 
 - Submit the submission script to Slurm
 
 ```
 sbatch submit_focus.sh
+```
+
+## 2dmorph
+
+- Create list of successfully focused directories (this will create `dirs_focused.txt`)
+
+```
+python list_dirs.py focused
+```
+
+
+
+### If Running with Global Settings
+
+- Open `write_2dmorph_settings.py` and configure the settings. There is also a variable at the top named `twodmorph_run_name`. You can change this variable for different 2dmorph settings. It will then create a directory list called `dirs_<twodmorph_run_name>.txt` and set the output to a directory with that name in `output_root` as configured above. 
+
+- Run `write_2dmorph_settings.py`
+
+```
+python write_2dmorph_settings.py
+```
+
+- Create a task list for 2dmorph.
+
+```
+python build_taskfile.py 2dmorph -d dirs_<twodmorph_run_name>.txt
+```
+
+### If Running with a CSV of Settings
+
+- Create `dirs_<twodmorph_run_name>.csv` listing the expected **output** directories and add fields for the settings you need to edit. Make sure to modify `write_2dmorph_settings.py` to read in these settings. (Sorry this is isn't automated yet).
+
+- Open `write_2dmorph_settings.py` and configure the settings. There is also a variable at the top named `twodmorph_run_name`. You can change this variable for different 2dmorph settings. It will then create a directory list called `dirs_<twodmorph_run_name>.txt` but you can ignore this file. 
+
+- Create a task list for 2dmorph 
+
+```
+python build_taskfile.py 2dmorph -d dirs_<twodmorph_run_name>.csv
+```
+
+- Use dead simple queue to create submission script and submit.
+
+```
+dSQ --taskfile taskfile_2dmorph.txt > submit_2dmorph.sh
+sbatch submit_2dmorph.sh
 ```
 
