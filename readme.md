@@ -161,15 +161,15 @@ sqCreateScript -w 24:00:00 -n 5 taskfile_focus.txt > submit_focus.sh
 sbatch submit_focus.sh
 ```
 
-## 2dmorph
+## 2dmorph & 3dmorph
+
+For 3dmorph, just substitute `3dmorph` for `2dmorph` in the following instructions.
 
 - Create list of successfully focused directories (this will create `dirs_focused.txt`)
 
 ```
 python list_dirs.py focused
 ```
-
-
 
 ### If Running with Global Settings
 
@@ -189,17 +189,13 @@ python build_taskfile.py 2dmorph -d dirs_<twodmorph_run_name>.txt
 
 ### If Running with a CSV of Settings
 
+- Select a name for this run (this will be used below as `twodmorph_run_name`).
+
+- Copy or move `dirs_focused.txt` to `dirs_<twodmorph_run_name>.csv` and add fields for the settings you need to edit.
+
 - Open `write_2dmorph_settings.py` and configure the  variable at the top named `twodmorph_run_name`.  You can change this variable for different 2dmorph settings so they output in unique locations. It will also create a directory list called `dirs_<twodmorph_run_name>.txt` and create output directories with that name in `output_root` as configured above. 
 
-- Run `write_2dmorph_settings.py`
-
-```
-python write_2dmorph_settings.py
-```
-
-- copy or move `dirs_<twodmorph_run_name>.txt` to `dirs_<twodmorph_run_name>.csv` and add fields for the settings you need to edit.
-
-- Open `write_2dmorph_settings.py` and configure the settings. Make sure to modify `write_2dmorph_settings.py` to read in these settings. It will create another directory list called `dirs_<twodmorph_run_name>.txt` but you can ignore this file.
+- Modify `write_2dmorph_settings.py` to read in the settings you added to your csv, `dirs_<twodmorph_run_name>.csv`.  Also configure the global settings.  
 
 - Run `write_2dmorph_settings.py`
 
@@ -213,10 +209,23 @@ python write_2dmorph_settings.py
 python build_taskfile.py 2dmorph -d dirs_<twodmorph_run_name>.csv
 ```
 
-- Use dead simple queue to create submission script and submit.
+### For Both Style of Runs
+
+- Use dead simple queue to create submission script and submit. For 3dmorph, also add the `-t 24:00:00` flag, since 3dmorph can take a very long time to run.
+
+2dmorph:
 
 ```
 dSQ --taskfile taskfile_2dmorph.txt > submit_2dmorph.sh
 sbatch submit_2dmorph.sh
 ```
+
+3dmorph:
+
+```
+dSQ -t 24:00:00 --taskfile taskfile_3dmorph.txt > submit_3dmorph.sh
+sbatch submit_3dmorph.sh
+```
+
+
 
